@@ -56,3 +56,23 @@ QUnit.test('registers itself with video.js', function(assert) {
     'the plugin adds a class to the player'
   );
 });
+
+QUnit.test('quality selector options', function(assert) {
+  assert.expect(1);
+
+  this.player.hlsQualitySelector({
+    mapLevel: true,
+    labelCallback: true
+  });
+
+  // Tick the clock forward enough to trigger the player to be "ready".
+  this.clock.tick(2);
+
+  // Tick the clock forward enough to trigger the player to be "ready".
+  assert.ok(
+    this.player.hlsQualitySelector._options &&
+    this.player.hlsQualitySelector._options.mapLevel &&
+    this.player.hlsQualitySelector._options.labelCallback,
+    'the plugin options loaded'
+  );
+});

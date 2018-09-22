@@ -21,6 +21,7 @@ class HlsQualitySelectorPlugin {
    */
   constructor(player, options) {
     this.player = player;
+    this._options = options;
 
     // If there is quality levels plugin and the HLS tech exists
     // then continue.
@@ -151,16 +152,22 @@ class HlsQualitySelectorPlugin {
   onAddQualityLevel() {
 
     const player = this.player;
+    const options = this._options;
     const qualityList = player.qualityLevels();
     const levels = qualityList.levels_ || [];
     const levelItems = [];
 
     for (let i = 0; i < levels.length; ++i) {
+      // transform level Representation
+      if ((typeof options.mapLevel === 'function')) {
+        levels[i] = options.mapLevel(levels[i]);
+      }
+
       if (!levelItems.filter(_existingItem => {
         return _existingItem.item && _existingItem.item.value === levels[i].height;
       }).length) {
         const levelItem = this.getQualityMenuItem.call(this, {
-          label: levels[i].height + 'p',
+          label: (typeof options.labelCallback === 'function') ? options.labelCallback(levels[i]) : levels[i].height + 'p',
           value: levels[i].height
         });
 
