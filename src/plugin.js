@@ -167,7 +167,8 @@ class HlsQualitySelectorPlugin {
         return _existingItem.item && _existingItem.item.value === levels[i].height;
       }).length) {
         const levelItem = this.getQualityMenuItem.call(this, {
-          label: (typeof options.labelCallback === 'function') ? options.labelCallback(levels[i]) : levels[i].height + 'p',
+          label: (typeof options.labelCallback === 'function') ? 
+            options.labelCallback(levels[i]) : levels[i].height + 'p',
           value: levels[i].height
         });
 

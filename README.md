@@ -54,7 +54,16 @@ require('videojs-hls-quality-selector');
 
 var player = videojs('my-video');
 
-player.hlsQualitySelector();
+player.hlsQualitySelector({
+    mapLavel: function (level) {
+        //@return Representation transformed level 
+        return level;
+    },
+    labelCallback: function (level) {
+        // return string label 
+        return 'custom label';
+    }
+});
 ```
 
 ### RequireJS/AMD
